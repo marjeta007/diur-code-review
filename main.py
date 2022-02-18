@@ -1,4 +1,4 @@
-from flask import *
+from flask import Flask, request
 import re
 import datetime
 import threading
@@ -9,8 +9,8 @@ app.debug = True
 InDate = None
 
 def parse_date():
-    matches = re.search(r"(\d+)[-. /](\d+)[-. /]?(\d+)?", InDate)
-    (month, dya, year) = matches.groups()
+    matches: re.Match = re.search(r"(?P<month>\d+)[-. /](P<day>\d+)[-. /]?(P<year>\d+)?", InDate)
+    (month, dya, year) = matches.groupdict()
     if not year:
         year = 2015
     ymd = (year, month, dya)
